@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Platzi-Curso de React.js</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+  <style>
+  *{
+	margin: 0;
+	padding: 0;
+	font-family: 'Lato', sans-serif;
+}
+body{
+	background-color: #23475b;
+}
+.hero{
+	background-color: #23475b;
+	color: #fff;
+	padding: 32px 15px;
+	display: grid;
+	grid-template-columns: minmax(auto, 1024px);
+	justify-content: center;
+}
+.hero-container{
+	display: grid;
+	grid-template-columns: 70px 1fr 320px;
+	grid-template-areas: "badge title form-layout"
+						 ". description form-layout"
+						 ". countdown form-layout";
+	grid-gap: 10px;
+}
+.hero .badge{
+	grid-area: badge;
+}
+.hero .badge img{
+	max-width: 70px;
+}
+.hero h1{
+	font-size: 36px;
+	font-weight: normal;
+	display: flex;
+	align-items: center;
+	grid-area: title;
+}
+.hero p{
+	grid-area: description;
+	margin-bottom: 12px;
+}
+.form-layout{
+	background-color: rgba(255,255,255,.9);
+	text-align: center;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	padding: 1.5em;
+	grid-area: form-layout;
+}
+.form-content{
+	width: 100%;
+}
+.form-layout input{
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #dbdbe2;
+	border-radius: 5px;
+	box-sizing: border-box;
+	margin-bottom: 12px;
+	overflow: cover;
+}
+.form-layout p{
+	font-size: 20px;
+	color: #3a3b3f;
+	margin-bottom: 1em;
+}
+.form-layout button{
+	background: #98ca3f;
+	color: white;
+	padding: 10px 15px;
+	border-radius: 5px;
+	border: none;
+	border-bottom: 5px solid #6d932b;
+	cursor: pointer;
+	outline: none;
+}
+.countdown{
+	grid-area: countdown;
+}
+.countdown p{
+	font-size: 20px;
+	text-align: center;
+	font-weight: 300;
+}
+.countdown span{
+	font-size: 33px;
+}
+.countdown span:after{
+	content: ':';
+	margin: 0.5px;
+	display: inline-block;
+}
+.countdown span:last-child:after{
+	display: none;
+}
+/*Responsive*/
+@media screen and (max-width: 768px){
+	.hero-container{
+		grid-template-columns: 70px 1fr;
+		grid-template-areas: "badge title"
+							 "description description"
+							 "form-layout form-layout"
+							 "countdown countdown";
+	}
+}
+  </style>
+</head>
+<body>
+	<div class="hero">
+		<div class="hero-container">
+			<div class="badge">
+				<img src="badge.png" alt="Platzi React">
+			</div>
+			<h1>Curso de React.js</h1>
+			<p>React es una de las librerías más utilizadas hoy en día para crear aplicaciones web. En este curso podrás dominar la creación de aplicaciones a través de un proyecto que te ayudará a explotar todas las capacidades de esta librería.</p>
+			<div class="form-layout">
+				<form action="" class="form-content">
+					<p>Regístrate a Platzi</p>
+					<input type="text" placeholder="Nombre" required>
+					<input type="email" placeholder="Correo Electronico" required>
+					<button type="submit">Comienza Ahora</button>
+				</form>
+			</div>
+			<div class="countdown">
+				<p id="release">Lanzamiento: </p>
+				<p id="timer">
+					<span id="days">01d</span>
+					<span id="hours">03h</span>
+					<span id="minutes">09m</span>
+					<span id="seconds">05s</span>
+				</p>
+			</div>			
+		</div>
+	</div>
+	<script >
+		let time = 97745
+		let release = document.getElementById("release")
+		let timer = document.getElementById("timer")
+		let days = document.getElementById("days")
+		let hours = document.getElementById("hours")
+		let minutes = document.getElementById("minutes")
+		let seconds = document.getElementById("seconds")
+		const validarDigitos = (numero) => numero>=10? numero + '' :  new Array(2).join('0') + numero
+		const interval = setInterval (() =>{
+			auxtime=time
+			time--
+			days.textContent = validarDigitos(Math.floor(auxtime / 86400)) + 'd'
+			auxtime %= 86400
+			hours.textContent = validarDigitos(Math.floor(auxtime / 3600)) + 'h'
+			auxtime %= 3600
+			minutes.textContent = validarDigitos(Math.floor(auxtime / 60)) + 'm'
+			auxtime %= 60
+			seconds.textContent = validarDigitos(Math.floor(auxtime)) + 's'
+			//en caso termine el countdown
+			if(time<0){
+				clearInterval(interval)
+				release.textContent = "Encuentra el Curso de React.js en Nuestra Plataforma"
+				timer.style.display = 'none'
+			}
+		}, 1000)
+	</script>
+</body>
+</html>
